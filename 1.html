@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="fullNameApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AngularJS Full Name</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body>
+  <div ng-controller="FullNameController">
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" ng-model="firstName" placeholder="Enter your first name">
+    <br>
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName" ng-model="lastName" placeholder="Enter your last name">
+    <br>
+    <button ng-click="displayFullName()">Display Full Name</button>
+    <br>
+    <div ng-if="fullName">{{ fullName }}</div>
+  </div>
+
+  <script>
+    angular.module('fullNameApp', [])
+    .controller('FullNameController', function($scope) {
+      // Default values for first name and last name
+      $scope.firstName = 'John';
+      $scope.lastName = 'Doe';
+
+      // Function to display full name
+      $scope.displayFullName = function() {
+        $scope.fullName = $scope.firstName + ' ' + $scope.lastName;
+      };
+    });
+  </script>
+</body>
+</html>

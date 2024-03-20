@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="todoApp">
+
+<head>
+    <title>To-Do List</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+   
+    <script>
+        var app = angular.module('todoApp', []);
+        app.controller('TodoListController', function ($scope) {
+            $scope.todos = [
+                { text: 'Learn AngularJS', done: false },
+                { text: 'Build a to-do list app', done: false }
+            ];
+            $scope.addTodo = function () {
+                $scope.todos.push({ text: $scope.todoText, done: false });
+                $scope.todoText = '';
+            };
+            $scope.remaining = function () {
+                var count = 0;
+                angular.forEach($scope.todos, function (todo) {
+                    count += todo.done ? 0 : 1;
+                });
+                return count;
+            };
+            $scope.delete = function () {
+                var oldTodos = $scope.todos;
+                $scope.todos = [];
+                angular.forEach(oldTodos, function (todo) {
+                    if (!todo.done) $scope.todos.push(todo);
+                });
+            };
+            $scope.edit = function (index) {
+                var editedTask = prompt("Edit Task", $scope.todos[index].text);
+                if (editedTask !== null) {
+                    $scope.todos[index].text = editedTask;
+                }
+            };
+        });
+    </script>
+</head>
+
+<body ng-controller="TodoListController">
+    <h1>To-Do List</h1>
+    <form ng-submit="addTodo()">
+        <input type="text" ng-model="todoText" placeholder="Add a new to-do">
+        <button type="submit">Add</button>
+    </form>
+    <ul>
+        <li ng-repeat="todo in todos">
+            <input type="checkbox" ng-model="todo.done">
+            <span ng-class="{done: todo.done}">{{todo.text}}</span>
+            <button ng-click="edit($index)">Edit</button>
+        </li>
+    </ul>
+    <p>{{remaining()}} of {{todos.length}} remaining</p>
+    <button ng-click="delete()">Delete completed to-dos</button>
+</body>
+
+</html>

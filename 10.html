@@ -1,0 +1,50 @@
+/prog10.html/
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Item Collection App</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    
+</head>
+<body ng-app="myApp">
+    <h1>Item List</h1>
+    <div ng-controller="myCtrl">
+        <input type="text" ng-model="newItem" placeholder="Enter new item" />
+        <button ng-click="addItem()">Add Item</button>
+        <hr>
+        <table border="1">
+            <tr>
+                <th>Item</th>
+                <th>Remove</th>
+            </tr>
+            <tr ng-repeat="item in items">
+               <td> {{ item }} </td>
+              <td><button ng-click="removeItem($index)">Remove</button></td>
+            </tr>
+        </table>
+
+        <p><b>Total Items:</b> {{ items.length }}</p>
+    </div>
+    <script>
+        angular.module('myApp', [])
+        .controller('myCtrl', function($scope) {
+            $scope.items = ['Laptop', 'Backpack', 'Tent']; // default items
+            $scope.newItem = '';
+        
+            $scope.addItem = function() {
+                if ($scope.newItem !== '') {
+                    $scope.items.push($scope.newItem);
+                    $scope.newItem = '';
+                }
+            };
+        
+            $scope.removeItem = function(index) {
+                $scope.items.splice(index, 1);
+            };
+        });
+        
+        </script>
+</body>
+</html>
+
+

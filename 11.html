@@ -1,0 +1,40 @@
+/prog11.html/
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Details to Uppercase</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+     
+</head>
+<body ng-app="studentApp" ng-controller="studentController">
+
+    <h2>Student Details</h2>
+
+    <ul>
+        <li ng-repeat="student in students">
+            {{ student | uppercaseStudent }}
+        </li>
+    </ul>
+
+    <script>
+         
+var app = angular.module('studentApp', []);
+
+app.controller('studentController', function($scope) {
+    $scope.students = [
+        'John Doe, Age: 20, Major: Computer Science',
+        'Jane Smith, Age: 22, Major: Mathematics',
+        'Emily Johnson, Age: 21, Major: Physics'
+         
+    ];
+});
+
+app.filter('uppercaseStudent', function() {
+    return function(input) {
+        return input ? input.toUpperCase() : '';
+    };
+});
+    </script>
+
+</body>
+</html>
